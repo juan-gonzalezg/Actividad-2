@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Multiverso - Rick & Morty Streaming</title>
+  <!-- Google Fonts for futuristic streaming look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Custom styles stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="transition-colors duration-300">
+
+  <!-- ================= AUTH VIEW CONTAINER ================= -->
+  <div id="auth-container" class="auth-wrapper animate-fade-in">
+    
+    <!-- Login Card -->
+    <div id="login-card" class="auth-card neumorphic">
+      <div class="auth-header">
+        <h1 class="auth-title">PORTAL MULTIVERSO</h1>
+        <p class="auth-subtitle">Acceso al sistema de streaming interdimensional</p>
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-email" class="form-label">Correo Electrónico</label>
+          <input type="email" id="login-email" required class="input-field" placeholder="rick@c137.com">
+          <span class="error-msg hidden"></span>
+        </div>
+
+        <div class="form-group">
+          <div class="form-group-header">
+            <label for="login-password" class="form-label">Contraseña</label>
+            <button type="button" id="go-recover-btn" class="text-link-btn">¿Olvidaste tu contraseña?</button>
+          </div>
+          <input type="password" id="login-password" required minlength="6" class="input-field" placeholder="••••••••">
+          <span class="error-msg hidden"></span>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Iniciar Sesión
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        ¿No tienes una cuenta? 
+        <button id="go-register-btn" class="text-link-btn">Regístrate</button>
+      </div>
+    </div>
+
+    <!-- Register Card -->
+    <div id="register-card" class="auth-card neumorphic hidden">
+      <div class="auth-header">
+        <h1 class="auth-title">CREAR CUENTA</h1>
+        <p class="auth-subtitle">Únete a la federación galáctica</p>
+      </div>
+
+      <form id="register-form" novalidate>
+        <div class="form-group">
+          <label for="register-name" class="form-label">Nombre de Usuario</label>
+          <input type="text" id="register-name" required minlength="3" class="input-field" placeholder="Morty Smith">
+          <span class="error-msg hidden"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="register-email" class="form-label">Correo Electrónico</label>
+          <input type="email" id="register-email" required class="input-field" placeholder="morty@smith.com">
+          <span class="error-msg hidden"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="register-password" class="form-label">Contraseña (Mín. 6 caracteres)</label>
+          <input type="password" id="register-password" required minlength="6" class="input-field" placeholder="••••••••">
+          <span class="error-msg hidden"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="register-confirm-password" class="form-label">Confirmar Contraseña</label>
+          <input type="password" id="register-confirm-password" required class="input-field" placeholder="••••••••">
+          <span class="error-msg hidden"></span>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Crear Cuenta
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        ¿Ya tienes cuenta? 
+        <button id="go-login-btn" class="text-link-btn">Inicia Sesión</button>
+      </div>
+    </div>
+
+    <!-- Password Recovery Card -->
+    <div id="recover-card" class="auth-card neumorphic hidden">
+      <div class="auth-header">
+        <h1 class="auth-title">RECUPERACIÓN</h1>
+        <p class="auth-subtitle">Restablece tus coordenadas de acceso</p>
+      </div>
+
+      <form id="recover-form" novalidate>
+        <div class="form-group">
+          <label for="recover-email" class="form-label">Correo Electrónico Registrado</label>
+          <input type="email" id="recover-email" required class="input-field" placeholder="rick@c137.com">
+          <span class="error-msg hidden"></span>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          Enviar Instrucciones
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        <button id="recover-back-to-login" class="text-link-btn" style="display: flex; align-items: center; justify-content: center; margin: 0 auto; gap: 0.375rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="height: 16px; width: 16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Volver al Login
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= MAIN DASHBOARD CONTAINER ================= -->
+  <div id="dashboard-container" class="dashboard-layout hidden animate-fade-in">
+    
+    <!-- Glassmorphic Header -->
+    <header class="nav-header glass-container">
+      <div class="nav-container">
+        
+        <!-- Logo -->
+        <div class="brand-wrapper">
+          <div class="brand-logo-badge">
+            <span>RM</span>
+          </div>
+          <div>
+            <span class="brand-title-text">PORTAL</span>
+            <span class="brand-subtitle-text">Multiverso</span>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-navigation">
+          <button id="tab-characters-btn" class="tab-nav-btn active-tab">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            Personajes
+          </button>
+          <button id="tab-episodes-btn" class="tab-nav-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+            </svg>
+            Episodios
+          </button>
+        </nav>
+
+        <!-- Right Menu (Offline badge, theme toggler, user settings) -->
+        <div class="nav-actions-wrapper">
+          <!-- Connection Status Indicator -->
+          <div id="conn-badge" class="connection-badge online glass-container">
+            <span class="dot animate-pulse"></span>
+            Online
+          </div>
+
+          <!-- Theme Toggler -->
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Cambiar tema">
+            <!-- Sun Icon (shown in dark mode) -->
+            <svg id="theme-sun-icon" xmlns="http://www.w3.org/2000/svg" style="color: #f1c40f;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+            </svg>
+            <!-- Moon Icon (shown in light mode) -->
+            <svg id="theme-moon-icon" xmlns="http://www.w3.org/2000/svg" style="color: #27ae60;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </button>
+
+          <!-- Profile Nav Button -->
+          <button id="nav-profile-btn" class="nav-profile-trigger">
+            <div class="nav-profile-avatar-circle" id="nav-profile-avatar">
+              U
+            </div>
+            <span class="nav-profile-username-text truncate" id="nav-profile-name">Perfil</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Offline Notification Banner -->
+    <div id="offline-banner" class="offline-banner-alert animate-pulse hidden">
+      CONEXIÓN PERDIDA: OPERANDO EN MODO RESILIENTE OFFLINE. TODOS LOS CAMBIOS SE GUARDARÁN LOCALMENTE.
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="main-wrapper-content">
+      
+      <!-- ================= HERO SECTION (Featured Character of the Day) ================= -->
+      <section id="featured-section" class="featured-hero-banner glass-container">
+        <!-- Background Gradient and Glow Overlay -->
+        <div class="hero-background-gradient-overlay"></div>
+        <div class="hero-image-wrapper-pane">
+          <img id="featured-img" src="" alt="Personaje del día" class="hero-image-media">
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content-body animate-slide-up">
+          <span class="hero-featured-tag">PERSONAJE DEL DÍA</span>
+          <h2 id="featured-name" class="hero-name-heading">Cargando...</h2>
+          
+          <div class="hero-badge-row">
+            <span id="featured-species" class="hero-pill-badge">Human</span>
+            <span class="hero-spacer-dot"></span>
+            <span id="featured-gender" class="hero-pill-badge">Male</span>
+            <span class="hero-spacer-dot"></span>
+            <span id="featured-status-pill" class="hero-status-tag">
+              <span class="status-dot"></span>
+              Alive
+            </span>
+          </div>
+          
+          <p id="featured-origin" class="hero-origin-description">Origen: Earth (C-137)</p>
+          
+          <button id="featured-details-btn" class="hero-cta-btn">
+            Explorar Ficha Técnica
+          </button>
+        </div>
+      </section>
+
+
+      <!-- ================= CHARACTERS GRID VIEW ================= -->
+      <section id="characters-section" class="catalog-section-wrapper animate-fade-in">
+        
+        <!-- Filter Toolbar -->
+        <div class="toolbar-panel glass-container">
+          <!-- Search input -->
+          <div class="search-input-wrapper">
+            <span class="search-input-icon-placement">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </span>
+            <input type="text" id="character-search" class="toolbar-search-input" placeholder="Buscar personaje por nombre...">
+          </div>
+
+          <!-- Filters group -->
+          <div class="filters-group-controls">
+            <div>
+              <select id="character-status-filter" class="toolbar-select-dropdown">
+                <option value="">Todos los Estados</option>
+                <option value="alive">Alive</option>
+                <option value="dead">Dead</option>
+                <option value="unknown">Unknown</option>
+              </select>
+            </div>
+
+            <div>
+              <select id="character-gender-filter" class="toolbar-select-dropdown">
+                <option value="">Todos los Géneros</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="genderless">Genderless</option>
+                <option value="unknown">Unknown</option>
+              </select>
+            </div>
+
+            <div class="toolbar-divider-bar"></div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <select id="character-sort-by" class="toolbar-select-dropdown">
+                <option value="id">Ordenar por ID</option>
+                <option value="name">Ordenar por Nombre</option>
+                <option value="species">Ordenar por Especie</option>
+                <option value="gender">Ordenar por Género</option>
+              </select>
+
+              <button id="character-sort-dir-btn" class="sort-dir-toggle-btn" aria-label="Cambiar ordenamiento">
+                <svg id="sort-asc-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                </svg>
+                <svg id="sort-desc-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid -->
+        <div id="characters-grid" class="responsive-cards-grid">
+          <!-- Loaded dynamically via JS -->
+        </div>
+
+        <!-- Loading spinner / No Results -->
+        <div id="characters-feedback" class="catalog-no-results-feedback hidden">
+          <p>No se encontraron personajes que coincidan con la búsqueda.</p>
+        </div>
+      </section>
+
+
+      <!-- ================= EPISODES GRID/TABLE VIEW ================= -->
+      <section id="episodes-section" class="catalog-section-wrapper hidden animate-fade-in">
+        
+        <!-- Filter Toolbar -->
+        <div class="toolbar-panel glass-container">
+          <!-- Search input -->
+          <div class="search-input-wrapper">
+            <span class="search-input-icon-placement">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </span>
+            <input type="text" id="episode-search" class="toolbar-search-input" placeholder="Buscar episodio por nombre...">
+          </div>
+
+          <!-- Ordering -->
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <select id="episode-sort-by" class="toolbar-select-dropdown">
+              <option value="id">Ordenar por ID</option>
+              <option value="name">Ordenar por Nombre</option>
+              <option value="air_date">Ordenar por Fecha de Emisión</option>
+              <option value="episode">Ordenar por Código</option>
+            </select>
+
+            <button id="episode-sort-dir-btn" class="sort-dir-toggle-btn" aria-label="Cambiar ordenamiento">
+              <svg id="ep-sort-asc-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+              </svg>
+              <svg id="ep-sort-desc-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Semantic Table Container -->
+        <div class="responsive-table-outer-wrapper">
+          <table class="catalog-episodes-table">
+            <thead>
+              <tr class="table-header-row">
+                <th class="table-header-cell interactive-header" data-col="id">ID</th>
+                <th class="table-header-cell interactive-header" data-col="name">Nombre</th>
+                <th class="table-header-cell interactive-header" data-col="air_date">Fecha de Emisión</th>
+                <th class="table-header-cell interactive-header" data-col="episode">Código de Episodio</th>
+                <th class="table-header-cell" style="text-align: right;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="episodes-table-body">
+              <!-- Loaded dynamically via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Loading spinner / No Results -->
+        <div id="episodes-feedback" class="catalog-no-results-feedback hidden">
+          <p>No se encontraron episodios que coincidan con la búsqueda.</p>
+        </div>
+      </section>
+
+
+      <!-- ================= USER PROFILE VIEW ================= -->
+      <section id="profile-section" class="user-profile-center-wrapper hidden animate-fade-in">
+        
+        <div class="profile-card-container glass-container">
+          
+          <div class="profile-header-group">
+            <div class="profile-big-avatar-circle" id="profile-big-avatar">
+              U
+            </div>
+            <div>
+              <h2 id="profile-display-name" class="profile-username-header-text">Nombre de Usuario</h2>
+              <p id="profile-display-email" class="profile-email-header-text">usuario@ejemplo.com</p>
+              <div class="profile-badge-active-session">
+                Sesión Activa: Cliente Local
+              </div>
+            </div>
+          </div>
+
+          <hr class="profile-divider">
+
+          <!-- Change Password Area -->
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <h3 class="profile-section-heading">Seguridad y Cuenta</h3>
+            <form id="change-password-form" style="display: flex; flex-direction: column; gap: 1rem;" novalidate>
+              <div class="form-group">
+                <label for="change-password-curr" class="form-label">Contraseña Actual</label>
+                <input type="password" id="change-password-curr" required class="input-field" placeholder="••••••••">
+                <span class="error-msg hidden"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="change-password-new" class="form-label">Nueva Contraseña (Mín. 6 caracteres)</label>
+                <input type="password" id="change-password-new" required minlength="6" class="input-field" placeholder="••••••••">
+                <span class="error-msg hidden"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="change-password-confirm" class="form-label">Confirmar Nueva Contraseña</label>
+                <input type="password" id="change-password-confirm" required class="input-field" placeholder="••••••••">
+                <span class="error-msg hidden"></span>
+              </div>
+
+              <button type="submit" class="btn-primary" style="max-width: 200px;">
+                Cambiar Contraseña
+              </button>
+            </form>
+          </div>
+
+          <hr class="profile-divider">
+
+          <!-- Logout Area -->
+          <div class="profile-logout-row">
+            <div>
+              <h4 class="logout-description-heading">Cerrar Sesión actual</h4>
+              <p class="logout-description-subtitle">Limpia las credenciales de sesión local y bloquea el acceso</p>
+            </div>
+            <button id="logout-btn" class="btn-danger-action">
+              Cerrar Sesión
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer glass-container">
+      <div class="footer-container">
+        <p>© 2026 Portal Multiverso - Actividad 2 UCAB</p>
+        <p>Desarrollado con HTML5, CSS3 y JavaScript Puros</p>
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- ================= DETAIL & EDIT DRAWER MODAL ================= -->
+  <div id="detail-drawer" class="drawer-overlay-wrapper invisible">
+    <!-- Backdrop overlay -->
+    <div id="drawer-backdrop" class="drawer-backdrop-blur-overlay"></div>
+    
+    <!-- Drawer Panel -->
+    <div id="drawer-panel" class="drawer-sliding-pane glass-container">
+      
+      <!-- Drawer Header -->
+      <div class="drawer-header-row">
+        <h3 id="drawer-title" class="drawer-header-title-text">Ficha Técnica</h3>
+        <button id="drawer-close-btn" class="drawer-close-icon-btn" aria-label="Cerrar panel">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Content wrapper (dynamically alternates detail-view / edit-form) -->
+      <div class="drawer-content-body-scroller" style="flex-grow: 1;">
+
+        <!-- ================= DETAIL VIEW MODE ================= -->
+        <div id="drawer-view-mode" class="drawer-content-body-scroller animate-fade-in">
+          
+          <!-- Character Specific Image -->
+          <div id="drawer-detail-img-container" class="drawer-image-wrapper hidden">
+            <img id="drawer-detail-img" src="" alt="Ficha del personaje" class="drawer-image-media">
+          </div>
+
+          <!-- Basic specifications -->
+          <div class="drawer-meta-title-group">
+            <h2 id="drawer-detail-name" class="drawer-meta-heading">Rick Sanchez</h2>
+            <div id="drawer-detail-status-wrapper" class="drawer-meta-status-pill-badge">
+              <!-- Dynamic status badge -->
+            </div>
+          </div>
+
+          <hr class="profile-divider">
+
+          <!-- Core specifications grid -->
+          <div id="drawer-specifications-grid" class="drawer-specifications-grid">
+            <!-- Loaded dynamically based on character/episode type -->
+          </div>
+
+          <hr class="profile-divider">
+
+          <!-- Episode / Cast list -->
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <h4 id="drawer-list-title" class="drawer-list-title-header">Apariciones</h4>
+            <div id="drawer-list-content" class="drawer-scrollable-appearance-list">
+              <!-- Loaded dynamically -->
+            </div>
+          </div>
+
+          <!-- Drawer Action Button -->
+          <div style="padding-top: 1rem;">
+            <button id="drawer-toggle-edit-btn" class="btn-primary">
+              Editar Información
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= EDIT MODE FORM ================= -->
+        <form id="drawer-edit-form" class="drawer-content-body-scroller hidden animate-fade-in" novalidate>
+          
+          <!-- Dynamic Form Inputs -->
+          <div class="drawer-content-body-scroller" id="drawer-edit-inputs">
+            <!-- Loaded dynamically: character inputs vs episode inputs -->
+          </div>
+
+          <div class="edit-form-actions-row">
+            <button type="submit" class="btn-primary" style="flex-grow: 1;">
+              Guardar Cambios
+            </button>
+            <button type="button" id="drawer-cancel-edit-btn" class="btn-secondary">
+              Descartar
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
+  <div id="toast-container" class="toast-notifications-fixed-container">
+    <!-- Toasts are dynamically added and removed here -->
+  </div>
+
+  <!-- Primary Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>
