@@ -10,7 +10,7 @@ Este repositorio contiene la entrega de la **Actividad #2** para la asignatura *
 ## 🚀 Demo en Vivo
 
 Puedes ver el proyecto desplegado en línea a través de GitHub Pages aquí:
-[https://tu-usuario.github.io/tu-repositorio/](https://tu-usuario.github.io/tu-repositorio/)
+[https://juan-gonzalezg.github.io/Actividad-2/](https://juan-gonzalezg.github.io/Actividad-2/)
 
 ---
 
